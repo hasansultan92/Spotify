@@ -26,15 +26,15 @@ class AuthViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
     
     override func loadView() {
         let webView = WKWebView()
-            webView.navigationDelegate = self
-            webView.uiDelegate = self
-            webView.allowsBackForwardNavigationGestures = true
-            webView.allowsLinkPreview = true
-            view = webView
-            if let url = AuthManager.shared.signInURL {
-                print(url)
-                webView.load(URLRequest(url: URL(string:"https://www.google.com")!))
-            }
+        webView.navigationDelegate = self
+        webView.uiDelegate = self
+        webView.allowsBackForwardNavigationGestures = true
+        webView.allowsLinkPreview = true
+        view = webView
+        if let url = AuthManager.shared.signInURL {
+            print(url)
+            webView.load(URLRequest(url: URL(string:"https://www.google.com")!))
+        }
         
     }
     
