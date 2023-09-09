@@ -33,7 +33,7 @@ class AuthViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
         view = webView
         if let url = AuthManager.shared.signInURL {
             print(url)
-            webView.load(URLRequest(url: URL(string:"https://www.google.com")!))
+            webView.load(URLRequest(url: url))
         }
         
     }
@@ -53,7 +53,7 @@ class AuthViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
         
         let component = URLComponents(string: url.absoluteString)
         guard let code = component?.queryItems?.first(where: {$0.name=="code"})?.value else{return}
-        print("Code \(code)")
+        print("Code: \(code)") // Exchange code for access token
     }
 
 }
