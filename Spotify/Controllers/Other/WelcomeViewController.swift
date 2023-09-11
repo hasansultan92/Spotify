@@ -9,7 +9,7 @@ import UIKit
 
 class WelcomeViewController: UIViewController {
 
-    private let signInButton: UIButton={
+    private let signInButton: UIButton = {
         let button = UIButton()
         button.setTitle("Sign in with Spotify", for: .normal)
         button.setTitleColor(.blue, for: .normal)
@@ -40,6 +40,14 @@ class WelcomeViewController: UIViewController {
     
     private func handleSignIn(success:Bool){
         // Log user in on throw an error
-         
+        guard success else {
+            let alert = UIAlertController(title: "Oops", message: "Something went wrong", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+            present(alert, animated: true)
+            return
+        }
+        let mainTabBarVC = TabBarViewController()
+        mainTabBarVC.modalPresentationStyle = .fullScreen
+        present(mainTabBarVC, animated: true)
     }
 }

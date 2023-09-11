@@ -29,6 +29,7 @@
 		94E786EE2AA901E5004BC962 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E786ED2AA901E5004BC962 /* Playlist.swift */; };
 		94E786F02AA901FC004BC962 /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E786EF2AA901FC004BC962 /* Artist.swift */; };
 		94E786F22AA9020E004BC962 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E786F12AA9020E004BC962 /* UserProfile.swift */; };
+		C19463752AAD292D00B6CE1C /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19463742AAD292D00B6CE1C /* AuthResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		94E786ED2AA901E5004BC962 /* Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		94E786EF2AA901FC004BC962 /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
 		94E786F12AA9020E004BC962 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		C19463742AAD292D00B6CE1C /* AuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				94E786BF2AA8FAEF004BC962 /* LaunchScreen.storyboard */,
+				C19463742AAD292D00B6CE1C /* AuthResponse.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -245,6 +248,7 @@
 				94E786E62AA8FFD1004BC962 /* AuthManager.swift in Sources */,
 				94E786D02AA8FE1B004BC962 /* SearchViewController.swift in Sources */,
 				94E786DA2AA8FF08004BC962 /* WelcomeViewController.swift in Sources */,
+				C19463752AAD292D00B6CE1C /* AuthResponse.swift in Sources */,
 				94E786DE2AA8FF19004BC962 /* ProfileViewController.swift in Sources */,
 				94E786B92AA8FAEE004BC962 /* HomeViewController.swift in Sources */,
 				94E786EA2AA8FFE7004BC962 /* HapticsManager.swift in Sources */,
