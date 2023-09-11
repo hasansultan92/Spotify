@@ -91,13 +91,14 @@ final class AuthManager {
                 return
             }
             do {
+//                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//                print("Success \(json)")
                 let result = try JSONDecoder().decode(AuthResponse.self, from: data)
                 print(result)
                 self?.cacheToken(result:result)
-                //let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                //print("Success \(json)")
                 completion(true)
             } catch {
+                print("Facing an error here")
                 print(error.localizedDescription)
                 completion(false) // Something failed
             }
