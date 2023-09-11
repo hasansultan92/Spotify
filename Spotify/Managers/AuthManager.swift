@@ -16,9 +16,9 @@ final class AuthManager {
         static let ClientId  = "6fba618119134925a35d03e66ee39363"
         static let ClientSecret = "9d3b8d85dc9d42d0a1e98c9520092846"
         static let tokenApiURL = "https://accounts.spotify.com/api/token"
-        static let redirectUri = "https://www.iosacademy.io"
-        static let scopes = "user-read-private"
-        //static let scopes = "user-read-private%20playlist-modify-public%20playlist-read-private%20playlist-modify-data%20user-follow-read%20user-library-modify%20user-library-read%20user-read-email"
+        static let redirectUri = "https://www.google.com"
+        //static let scopes = "user-read-private"
+        static let scopes = "user-read-private%20playlist-modify-public%20playlist-read-private%20playlist-modify-private%20user-follow-read%20user-library-modify%20user-library-read%20user-read-email"
     }
     
     private init(){}
