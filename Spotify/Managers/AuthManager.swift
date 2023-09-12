@@ -94,32 +94,34 @@ final class AuthManager {
 //                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
 //                print("Success \(json)")
                 let result = try JSONDecoder().decode(AuthResponse.self, from: data)
-                print(result)
+                //print(result)
                 self?.cacheToken(result:result)
                 completion(true)
             } catch {
+                // Something went wrong
                 print("Facing an error here")
                 print(error.localizedDescription)
-                completion(false) // Something failed
+                completion(false)
             }
         }
         task.resume()
     }
     
-    public func refreshIfNeeded (completion:@escaping (Bool)->Void) {
-//        guard shouldRefreshToken else{
-//            completion(true)
-//            return
-//        }
-        guard let refreshToken = self.refreshToken else {
+    public func refreshIfNeeded (completion:((Bool)->Void)?) {
+
+        guard !shouldRefreshToken else{
+            completion?(true)
             return
         }
+        
+        guard let refreshToken = self.refreshToken else {return}
 
         //MARK: - Refresh logic
         
         guard let url = URL(string: Constant.tokenApiURL)else{
             return
         }
+        
         var components = URLComponents()
         components.queryItems = [
         URLQueryItem(name: "grant_type", value: "refresh_token"),
@@ -135,7 +137,7 @@ final class AuthManager {
         let data = basicToken.data(using: .utf8)
         guard let base64String = data?.base64EncodedString() else{
             print("Failure to get base64 in refreshToken")
-            completion(false)
+            completion?(false)
             return
         }
 
@@ -143,27 +145,27 @@ final class AuthManager {
         let task = URLSession.shared.dataTask(with: request){[weak self] data, _, error in
             guard let data = data,
                     error == nil else{
-                completion(false)
+                completion?(false)
                 return
             }
             do {
                 let result = try JSONDecoder().decode(AuthResponse.self, from: data)
-                print("successfully refreshed")
+                //print("successfully refreshed")
                 self?.cacheToken(result:result)
-                //let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                //print("Success \(json)")
-                completion(true)
+                completion?(true)
             } catch {
+                print("Something is going wrong")
                 print(error.localizedDescription)
-                completion(false) // Something failed
+                completion?(false) // Something failed
             }
         }
         task.resume()
         
     }
     
+    // Attempts to cache the token if there was a change coming from the Spotify URL
     private func cacheToken(result:AuthResponse){
-        print(result)
+        //print(result)
         UserDefaults.standard.setValue(result.access_token, forKey: "access_token")
         if let refresh_token = result.refresh_token{
             UserDefaults.standard.setValue(refresh_token, forKey: "refresh_token")
