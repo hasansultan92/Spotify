@@ -13,6 +13,7 @@ final class AuthManager {
     static let shared = AuthManager()
     
     struct Constant {
+        static let base = "https://www.accounts.spotify.com/authorize"
         static let ClientId  = "6fba618119134925a35d03e66ee39363"
         static let ClientSecret = "9d3b8d85dc9d42d0a1e98c9520092846"
         static let tokenApiURL = "https://accounts.spotify.com/api/token"
@@ -24,8 +25,8 @@ final class AuthManager {
     private init(){}
     
     public var signInURL: URL? {
-        let base = "https://accounts.spotify.com/authorize"
-        let string = "\(base)?response_type=code&client_id=\(Constant.ClientId)&scope=\(Constant.scopes)&redirect_uri=\(Constant.redirectUri)&show_dialog=TRUE"
+       
+        let string = "\(Constant.base)?response_type=code&client_id=\(Constant.ClientId)&scope=\(Constant.scopes)&redirect_uri=\(Constant.redirectUri)&show_dialog=TRUE"
     return URL(string: string )
     }
     
