@@ -63,6 +63,76 @@ final class APICaller {
                 task.resume()
             }
     )}
+    
+    public func getFeaturedPlaylists (completion: @escaping ((Result<FeaturedPlaylistResponse, Error>)->Void)){
+        
+        createRequest(with: URL(string: Constants.baseURL + "/browse/featured-playlists?limits=2"), type: .GET){
+            request in
+            
+            let task = URLSession.shared.dataTask(with: request)
+            {
+                data, HTTPResponse, error in
+                guard let data = data, error == nil else{
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do {
+                    let result = try JSONDecoder().decode(FeaturedPlaylistResponse.self, from: data)
+                    print(result)
+                    completion(.success(result))
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    public func getRecommendationsGenres(completion:@escaping((Result<RecommendedGenresResponse, Error>)->Void)){
+        createRequest(with: URL(string: Constants.baseURL + "/recommendations/available-genre-seeds"), type: .GET){
+            request in
+            let task = URLSession.shared.dataTask(with: request)
+            {
+                data, HTTPResponse, error in
+                guard let data = data, error == nil else{
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do {
+                    let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                    print(result)
+                    //try JSONDecoder().decode(FeaturedPlaylistResponse.self, from: data)
+                    //print(result)
+                   // completion(.success(result))
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    public func getRecommended(genres: Set<String>, completion: @escaping ((Result<String, Error>)->Void)){
+        let seeds = genres.joined(separator: ",")
+        createRequest(with: URL(string: Constants.baseURL+"/recommendations?seed_genres=\(seeds)"), type: .GET){
+            request in
+            let task = URLSession.shared.dataTask(with: request)
+            {
+                data, HTTPResponse, error in
+                guard let data = data, error == nil else{
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do {
+                    let result = try JSONSerialization.jsonObject(with: data)
+                    print("json: \(result)")
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+    }
 }
 
 
@@ -71,14 +141,25 @@ enum HTTPMethod : String {
     case POST
 }
 
+// MARK: Create Request
 private func createRequest
 (
-with url:URL?,
-type: HTTPMethod,
-completion: @escaping (URLRequest)->Void
+    with url:URL?,
+    type: HTTPMethod,
+    completion: @escaping (URLRequest)->Void
 )
 {
-    
+    AuthManager.shared.withValidToken {
+        token in // should return the string of the token
+        guard let apiURL = url else{
+            return
+        }
+        var request = URLRequest(url: apiURL)
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.httpMethod = type.rawValue
+        request.timeoutInterval = 30
+        completion(request)
+    }
 }
 
 

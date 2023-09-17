@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if AuthManager.shared.isSignedIn {
             AuthManager.shared.refreshIfNeeded(completion: nil) // Makes the token valid if needed at start
             window.rootViewController = TabBarViewController ()
-        }else{
+        } else {
             let navVc = UINavigationController(rootViewController: WelcomeViewController())
             navVc.navigationBar.prefersLargeTitles = true
             navVc.viewControllers.first?.navigationItem.largeTitleDisplayMode = .always
