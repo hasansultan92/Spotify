@@ -20,7 +20,7 @@ class HomeViewController: UIViewController {
         APICaller.shared.getRecommendationsGenres { result in
             switch result {
             case .success(let model):
-                //print(model)
+
                 let genres = model.genres
                 var seeds = Set <String>()
                 while seeds.count < 5 {

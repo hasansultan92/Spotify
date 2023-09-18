@@ -99,11 +99,8 @@ final class APICaller {
                     return
                 }
                 do {
-                    let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                    print(result)
-                    //try JSONDecoder().decode(FeaturedPlaylistResponse.self, from: data)
-                    //print(result)
-                   // completion(.success(result))
+                    let result = try JSONDecoder().decode(RecommendedGenresResponse.self, from: data)
+                    completion(.success(result))
                 } catch {
                     completion(.failure(error))
                 }
@@ -112,9 +109,12 @@ final class APICaller {
         }
     }
     
-    public func getRecommended(genres: Set<String>, completion: @escaping ((Result<String, Error>)->Void)){
+    public func getRecommended(genres: Set<String>, completion: @escaping ((Result<RecommendationResponse, Error>)->Void)){
         let seeds = genres.joined(separator: ",")
-        createRequest(with: URL(string: Constants.baseURL+"/recommendations?seed_genres=\(seeds)"), type: .GET){
+        createRequest(
+            with: URL(string: Constants.baseURL + "/recommendations?limit=10&seed_genres=\(seeds)"),
+            type: .GET)
+        {
             request in
             let task = URLSession.shared.dataTask(with: request)
             {
@@ -124,9 +124,10 @@ final class APICaller {
                     return
                 }
                 do {
-                    let result = try JSONSerialization.jsonObject(with: data)
-                    print("json: \(result)")
+                    let result = try JSONDecoder().decode(RecommendationResponse.self, from: data)
+                    completion(.success(result))
                 } catch {
+                    print(error)
                     completion(.failure(error))
                 }
             }
